@@ -103,6 +103,16 @@ class CliTests(unittest.TestCase):
         self.assertEqual(r['changes'],[])
         self.assertEqual(r['omitted_changes'],3)
 
+    def test_oversized_json_integer_is_invalid_input_not_traceback(self):
+        with tempfile.TemporaryDirectory() as temp:
+            path=Path(temp)/'invalid.json'
+            path.write_text('1'*5000)
+            p=self.run_cli(str(path),'--json-string')
+            self.assertEqual(p.returncode,2)
+            self.assertEqual(p.stdout,b'')
+            self.assertNotIn(b'Traceback',p.stderr)
+            self.assertIn(b'overprint-ledger:',p.stderr)
+
 
 if __name__ == '__main__':
     unittest.main()

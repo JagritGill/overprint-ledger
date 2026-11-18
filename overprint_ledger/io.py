@@ -32,7 +32,11 @@ def load_log(path: str | Path, *, json_string: bool = False) -> bytes:
         if type(decoded) is not str:
             raise LogError("encoded input must be one JSON string")
         data = decoded.encode("ascii")
-    except (UnicodeError, json.JSONDecodeError, RecursionError):
+    except LogError:
+        raise
+    except (ValueError, RecursionError):
+        # json.loads can raise a plain ValueError for an oversized integer token;
+        # retain the interpreter's safety limit and report invalid input normally.
         raise LogError("invalid JSON string or non-ASCII stream") from None
     if len(data) > MAX_BYTES:
         raise LogError("decoded stream exceeds its byte limit")
