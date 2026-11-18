@@ -1,0 +1,10 @@
+bytes=24 lines=1 lost_glyphs=3 overwritten=3 erased=0
+destructive_operations=3 affected_lines=1 same_glyph_rewrites=8
+gate=FAIL (glyph changes found)
+line 1: "tests: PASS"
+change line=1 bytes=[19,20) kind=write lost=1 omitted_witnesses=0
+  column=8 prior_byte=7 "F" -> "P"
+change line=1 bytes=[21,22) kind=write lost=1 omitted_witnesses=0
+  column=10 prior_byte=9 "I" -> "S"
+change line=1 bytes=[22,23) kind=write lost=1 omitted_witnesses=0
+  column=11 prior_byte=10 "L" -> "S"
